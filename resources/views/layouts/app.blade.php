@@ -91,9 +91,9 @@
                                     Products
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">View</a>
+                                    <a class="dropdown-item" href="/products">View</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Create</a>
+                                    <a class="dropdown-item" href="/products/create">Create</a>
                                 </div>
                             </li>
                         </ul>

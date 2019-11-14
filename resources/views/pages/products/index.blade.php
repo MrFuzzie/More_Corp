@@ -28,13 +28,15 @@
                     <td>{{$product->description}}</td>
                     <td>{{$product->sku}}</td>
                     <td>{{$product->price}}</td>
-                    <td><a href="/products/{{$product->id}}">View</a></td>
-                    <td><a href="/products/{{$product->id}}/edit">Edit</a></td>
+                    <td><a href="/products/{{$product->id}}"><span data-feather="eye"></span></a></td>
+                    <td><a href="/products/{{$product->id}}/edit"><span data-feather="edit"></span></a></td>
                     <td>
                         <form class="delete" action="/products/{{$product->id}}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">
                             {{ csrf_field() }}
-                            <input type="submit" value="Delete">
+                            <button type="submit" class="btn btn-link" role="link">
+                                <span data-feather="trash"></span>
+                            </button>
                         </form>
                     </td>
                 </tr>

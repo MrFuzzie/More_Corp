@@ -3,9 +3,10 @@
 @section('content')
 
     <div class="card">
-        <h5 class="card-header bg-primary text-white">Create product</h5>
+        <h5 class="card-header bg-primary text-white text-center">Create product</h5>
 
         <form method="post" action="/products">
+
             @include('pages.products.partial-form')
         </form>
     </div>

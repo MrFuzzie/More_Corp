@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UniqueViewEvent;
 use App\Http\Requests\StoreProduct;
 use App\Product;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['show']]);
     }
 
     /**
@@ -26,7 +27,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::where(function ($query){
+            $query->orWhere('name', 'LIKE', '%'.request('search').'%')
+                ->orWhere('sku', 'LIKE', '%'.request('search').'%');
+        })
+        ->paginate(20);
         return view('pages.products.index', compact('products'));
     }
 
@@ -85,6 +90,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        event(new UniqueViewEvent($product));
+
         return view('pages.products.view', compact('product'));
     }
 

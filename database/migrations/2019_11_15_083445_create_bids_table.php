@@ -17,7 +17,7 @@ class CreateBidsTable extends Migration
             $table->increments('id');
             $table->bigInteger('product_id');
             $table->string('user_id');
-            $table->float('bid');
+            $table->decimal('bid', '10', '2');
             $table->timestamps();
         });
     }

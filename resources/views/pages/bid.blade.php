@@ -15,15 +15,6 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        @if ($errors->has('email'))
-                            <br>
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
-                        <input type="text" class="form-control" id="email" name="email" placeholder="email@example.org" value="{{old('email')}}" autocomplete="off">
-                    </div>
-
-                    <div class="form-group">
                         <label for="bid">Bid amount</label>
                         @if ($errors->has('bid'))
                             <br>

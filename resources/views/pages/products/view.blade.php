@@ -1,13 +1,5 @@
 
-@guest
-    @extends('layouts.visitor')
-@else
-    {{--@if(Auth::user()->type == 1)--}}
-        {{--@extends('layouts.app')--}}
-    {{--@else--}}
-        {{--@extends('layouts.visitor')--}}
-    {{--@endif--}}
-@endguest
+@extends('layouts.app')
 
 @section('content')
 
@@ -53,7 +45,7 @@
 
                         <div class="form-group row">
                             <label class="mr-1">Average Bid :</label>
-                            <p>{{'R '.($product->bids->count() > 0 ? $product->bids->avg('bid') : '0.00')}}</p>
+                            <p>{{'R '.($product->bids->count() > 0 ? number_format($product->bids->avg('bid'), 2) : '0.00')}}</p>
                         </div>
 
                         @if(Auth::check())
@@ -61,7 +53,8 @@
                             @php
                                 $user = Auth::user();
                                 $userType = $user->type;
-                                $userBids = ($user->bids->count() > 0 ? 'R '.$user->bids->where('product_id', $product->id)->first()->bid : '');
+                                $userBids = ($user->bids->where('product_id', $product->id)->count() > 0 ? 'R '.$user->bids->where('product_id', $product->id)->first()->bid : '');
+
                             @endphp
 
                             @if($userType == 0 && $userBids !== '')
@@ -75,8 +68,8 @@
                             @if($userType == 1)
 
                                 <div class="form-group row">
-                                    <label class="mr-1">Average Bid :</label>
-                                    <p>{{'R '.($product->bids->count() > 0 ?$product->bids->avg('bid') : '0.00')}}</p>
+                                    <label class="mr-1">Lowest Bid :</label>
+                                    <p>{{'R '.($product->bids->count() > 0 ?$product->bids->min('bid') : '0.00')}}</p>
                                 </div>
 
                                 <div class="form-group row">
@@ -112,6 +105,10 @@
             </div>
             @endif
         </div>
+    </div>
+
+    <div class="form-group mt-2">
+        <a href="{{ URL::previous() }}" class="btn btn-outline-primary">Back</a>
     </div>
 
 @endsection

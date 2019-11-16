@@ -6,6 +6,7 @@ use App\Events\UniqueViewEvent;
 use App\Http\Requests\StoreProduct;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -27,6 +28,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->type == 1){
+            return view('pages.errors.404');
+        }
+
         $products = Product::where(function ($query){
             $query->orWhere('name', 'LIKE', '%'.request('search').'%')
                 ->orWhere('sku', 'LIKE', '%'.request('search').'%');
@@ -42,6 +47,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->type == 1){
+            return view('pages.errors.404');
+        }
+
         /* Initiate a new customer instance * used to set default form value */
         $product = new Product();
 
@@ -57,6 +66,10 @@ class ProductController extends Controller
      */
     public function store(Request $request, StoreProduct $storeProduct)
     {
+        if(!Auth::user()->type == 1){
+            return view('pages.errors.404');
+        }
+
         DB::beginTransaction();
         try{
 
@@ -103,6 +116,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        if(!Auth::user()->type == 1){
+            return view('pages.errors.404');
+        }
+
         return view('pages.products.edit', compact('product'));
     }
 
@@ -116,6 +133,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, StoreProduct $storeProduct, Product $product)
     {
+        if(!Auth::user()->type == 1){
+            return view('pages.errors.404');
+        }
+
         DB::beginTransaction();
         try{
 
@@ -146,6 +167,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        if(!Auth::user()->type == 1){
+            return view('pages.errors.404');
+        }
+
         try {
             $product->delete();
         }catch (\Exception $e){

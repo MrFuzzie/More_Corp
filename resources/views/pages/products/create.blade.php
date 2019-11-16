@@ -11,4 +11,8 @@
         </form>
     </div>
 
+    <div class="form-group mt-2">
+        <a href="{{ URL::previous() }}" class="btn btn-outline-primary">Back</a>
+    </div>
+
 @endsection

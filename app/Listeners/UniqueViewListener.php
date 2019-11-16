@@ -23,7 +23,7 @@ class UniqueViewListener
         /** if not admin user run the event * unless we want to boost our own views ;D */
 
         if(!Auth::check() || Auth::user()->type == 0) {
-            //Check if the visitor has viewed the product
+            //Check if the visitor has viewed the product previously
             $productViews = $event->product->views->where('ip_address', request()->ip());
             if ($productViews->count() == 0) {
 

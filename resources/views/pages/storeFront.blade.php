@@ -1,10 +1,10 @@
 
-@extends('layouts.visitor')
+@extends('layouts.app')
 
 @section('content')
     <main role="main">
 
-        <section class="jumbotron text-center w-100  border border-primary">
+        <section class="jumbotron text-center ">
             <div class="container">
                 <h1 class="jumbotron-heading">Lorem ipsum</h1>
                 <p class="lead text-muted">Tristique et egestas quis ipsum. Eu augue ut lectus arcu. Bibendum neque egestas congue quisque egestas. Accumsan in nisl nisi scelerisque eu ultrices.</p>
@@ -37,7 +37,6 @@
                                             <button type="button" class="btnBid btn btn-sm btn-outline-secondary" data-id="{{$product->id}}" data-toggle="modal" data-target="#bidModal">Bid</button>
                                         @endguest
                                     </div>
-                                    <small class="text-muted">9 mins</small>
                                 </div>
                             </div>
                         </div>

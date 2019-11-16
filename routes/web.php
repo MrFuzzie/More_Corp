@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', 'StoreFrontController@index');
-Route::post('/product/{product}/bid', 'StoreFrontController@store');
-
 Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'AdminController@dashboard');
+
 Route::resource('products', 'ProductController');
+
+Route::get('/', 'StoreFrontController@index');
+Route::post('/product/{product}/bid', 'StoreFrontController@storeBid');

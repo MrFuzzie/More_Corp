@@ -4,10 +4,6 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                <button class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
             <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
                 <span data-feather="calendar"></span>
                 This week
@@ -28,15 +24,15 @@
 
         $(function () {
 
-
-            var data = <?php $p ?>
+            var data =<?php echo json_encode($data); ?>;
+                console.log(data);
             var ctx = document.getElementById("myChart");
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"],
                     datasets: [{
-                        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                        data: data,
                         lineTension: 0,
                         backgroundColor: 'transparent',
                         borderColor: '#007bff',
@@ -48,12 +44,15 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero: false
+                                beginAtZero: true
                             }
                         }]
                     },
                     legend: {
                         display: false,
+                    },title: {
+                        display: true,
+                        text: 'Bids this week'
                     }
                 }
             });

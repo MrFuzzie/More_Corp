@@ -12,15 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item mr-2 border-bottom border-light">
-                <a href="#" class="nav-link text-white">Home</a>
-            </li>
-            <li class="nav-item mr-2 border-bottom border-light">
-                <a href="#" class="nav-link text-white">About</a>
-            </li>
-            <li class="nav-item mr-2 border-bottom border-light">
-                <a href="#" class="nav-link text-white text-decoration-none">Products</a>
-            </li>
+            {{-- Your nav items here e.g. home, about, etc. --}}
         </ul>
 
         <!-- Right Side Of Navbar -->

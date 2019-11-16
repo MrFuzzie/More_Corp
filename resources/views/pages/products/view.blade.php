@@ -1,91 +1,95 @@
-@if(Auth::user()->type == 1)
 
-@else
+@guest
     @extends('layouts.visitor')
-@endif
+@else
+    {{--@if(Auth::user()->type == 1)--}}
+        {{--@extends('layouts.app')--}}
+    {{--@else--}}
+        {{--@extends('layouts.visitor')--}}
+    {{--@endif--}}
+@endguest
 
 @section('content')
 
     <div class="card">
-        <h5 class="card-header bg-primary text-white text-center">View product</h5>
+        <h5 class="card-header bg-primary text-white text-center">{{$product->name}}</h5>
 
         <div class="card-body">
 
             <div class="container w-100">
                 <div class="row">
+                    <div class="col m-0 p-0 w-auto">
+                        <img src="https://via.placeholder.com/250" />
+                    </div>
                     <div class="col w-75">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label">Name :</label>
-                            <div class="col-lg-8">
-                                <input type="text" class="form-control-plaintext" readonly id="name" value="{{$product->name}}">
-                            </div>
+                            <label class="mr-1">Name : </label>
+                            <p>{{$product->name}}</p>
                         </div>
 
                         <div class="form-group row">
-                            <label for="description" class="col-sm-3 col-form-label">Description :</label>
-                            <div class="col-lg-8">
-                                <input type="text" class="form-control-plaintext" readonly id="description" value="{{$product->description}}">
-                            </div>
+                            <label class="mr-1">Descripton :</label>
+                            <p>{{$product->description}}</p>
                         </div>
 
                         <div class="form-group row">
-                            <label for="sku" class="col-sm-3 col-form-label">SKU :</label>
-                            <div class="col-lg-8">
-                                <input type="text" class="form-control-plaintext" readonly id="sku" value="{{$product->sku}}">
-                            </div>
+                            <label class="mr-1">Sku : </label>
+                            <p>{{$product->sku}}</p>
                         </div>
 
                         <div class="form-group row">
-                            <label for="price" class="col-sm-3 col-form-label">Price :</label>
-                            <div class="col-lg-8">
-                                <input type="text" class="form-control-plaintext" readonly id="price" value="{{'R '. $product->price}}">
-                            </div>
+                            <label class="mr-1">Price : </label>
+                            <p>{{' R '. $product->price}}</p>
                         </div>
+
                     </div>
-                    @php
-                        $user = Auth::user();
-                        $userType = $user->type;
-                        $userBids = $user->bids->where('product_id', $product->id)->first();
-                    @endphp
 
                     <div class="col w-25 ml-2">
+
                         <div class="form-group row">
-                            <label for="sku" class="col-sm-3 col-form-label">Highest Bid :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control-plaintext" readonly id="sku" value="{{'R '.$product->bids->max('bid')}}">
-                            </div>
+                            <label class="mr-1">Highest Bid : </label>
+                            <p>{{'R '.($product->bids->count() > 0 ? $product->bids->max('bid') : '0.00')}}</p>
                         </div>
 
                         <div class="form-group row">
-                            <label for="sku" class="col-sm-3 col-form-label">Average Bid :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control-plaintext" readonly id="sku" value="{{'R '.$product->bids->avg('bid')}}">
-                            </div>
+                            <label class="mr-1">Average Bid :</label>
+                            <p>{{'R '.($product->bids->count() > 0 ? $product->bids->avg('bid') : '0.00')}}</p>
                         </div>
 
-                        @if($userType == 1)
-                        <div class="form-group row">
-                            <label for="sku" class="col-sm-3 col-form-label">Average Bid :</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control-plaintext" readonly id="sku" value="{{'R '.$product->bids->avg('bid')}}">
-                            </div>
-                        </div>
-                        @endif
+                        @if(Auth::check())
 
+                            @php
+                                $user = Auth::user();
+                                $userType = $user->type;
+                                $userBids = ($user->bids->count() > 0 ? 'R '.$user->bids->where('product_id', $product->id)->first()->bid : '');
+                            @endphp
 
-                        @if($userType == 0 && $userBids)
-                            <div class="form-group row">
-                                <label for="sku" class="col-sm-3 col-form-label">My Bid :</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control-plaintext" readonly id="sku" value="{{'R '.$userBids->bid}}">
+                            @if($userType == 0 && $userBids !== '')
+
+                                <div class="form-group row">
+                                    <label class="mr-1">My Bid :</label>
+                                    <p>{{$userBids}}</p>
                                 </div>
-                            </div>
+                            @endif
+
+                            @if($userType == 1)
+
+                                <div class="form-group row">
+                                    <label class="mr-1">Average Bid :</label>
+                                    <p>{{'R '.($product->bids->count() > 0 ?$product->bids->avg('bid') : '0.00')}}</p>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="mr-1">Views :</label>
+                                    <p>{{$product->views->count()}}</p>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>
             </div>
 
-            @if($userType == 1)
+            @if(Auth::check() && $userType == 1)
             <hr>
             <div class="container mt-5">
                 <h2 class="text-center">Bids</h2>

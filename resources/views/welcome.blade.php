@@ -4,14 +4,10 @@
 @section('content')
     <main role="main">
 
-        <section class="jumbotron text-center">
+        <section class="jumbotron text-center w-100  border border-primary">
             <div class="container">
-                <h1 class="jumbotron-heading">Album example</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                </p>
+                <h1 class="jumbotron-heading">Lorem ipsum</h1>
+                <p class="lead text-muted">Tristique et egestas quis ipsum. Eu augue ut lectus arcu. Bibendum neque egestas congue quisque egestas. Accumsan in nisl nisi scelerisque eu ultrices.</p>
             </div>
         </section>
 

@@ -6,6 +6,16 @@
         <h1>Products</h1>
     </div>
 
+    <div>
+        <form method="get" action="/products">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Search name or sku..." aria-label="search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <input type="submit" class="input-group-text btn btn-outline-primary" value="Search"/>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <table class="table table-striped table-sm">
         <thead class="thead-dark">
@@ -15,9 +25,8 @@
                 <th scope="col">Description</th>
                 <th scope="col">Sku</th>
                 <th scope="col">Price</th>
-                <th scope="col">View</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th scope="col">Views</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,21 +37,38 @@
                     <td>{{$product->description}}</td>
                     <td>{{$product->sku}}</td>
                     <td>{{$product->price}}</td>
-                    <td><a href="/products/{{$product->id}}"><span data-feather="eye"></span></a></td>
-                    <td><a href="/products/{{$product->id}}/edit"><span data-feather="edit"></span></a></td>
+                    <td>{{$product->views->count()}}</td>
                     <td>
-                        <form class="delete" action="/products/{{$product->id}}" method="POST">
-                            <input type="hidden" name="_method" value="DELETE">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-link" role="link">
-                                <span data-feather="trash"></span>
-                            </button>
-                        </form>
+                        <div class="dropdown show">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Actions
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a href="/products/{{$product->id}}" class="dropdown-item">
+                                    <span data-feather="eye"></span>
+                                    View
+                                </a>
+                                <a href="/products/{{$product->id}}/edit" class="dropdown-item">
+                                    <span data-feather="edit"></span>
+                                    Edit
+                                </a>
+                                <form class="delete" action="/products/{{$product->id}}" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-link dropdown-item" role="link">
+                                        <span data-feather="trash"></span>
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    {{$products->appends(request()->input())->links()}}
 @endsection
 
 @section('js')

@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'StoreFrontController@index');
+Route::post('/product/{product}/bid', 'StoreFrontController@store');
 
 Auth::routes();
 

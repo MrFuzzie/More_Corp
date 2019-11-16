@@ -1,94 +1,72 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+@extends('layouts.visitor')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+@section('content')
+    <main role="main">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Album example</h1>
+                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+                <p>
+                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
+                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                </p>
+            </div>
+        </section>
 
-            .full-height {
-                height: 100vh;
-            }
+        <div class="album py-5 bg-light">
+            <div class="container">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Sign in</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="row">
+                    @foreach($products as $product)
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">{{$product->name}}</p>
+                                <p class="card-text">{{$product->description}}</p>
+                                <p class="card-text">{{'R '.$product->price}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="/products/{{$product->id}}">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        </a>
+                                        {{-- If user is a guest redirect them to the registration page * else open bid modal --}}
+                                        @guest
+                                            <a href="/login">
+                                                <button type="button" class="btnBid btn btn-sm btn-outline-secondary">Bid</button>
+                                            </a>
+                                        @else
+                                            <button type="button" class="btnBid btn btn-sm btn-outline-secondary" data-id="{{$product->id}}" data-toggle="modal" data-target="#bidModal">Bid</button>
+                                        @endguest
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    </body>
-</html>
+
+    </main>
+    @include('pages.bid')
+@endsection
+
+@section('js')
+    @parent
+    <script>
+
+        $(function () {
+
+           $('.btnBid').on('click', function () {
+
+             var id = $(this).data('id');
+             $('#bidForm').attr('action', '/product/'+ id +'/bid');
+           });
+        });
+    </script>
+
+@endsection

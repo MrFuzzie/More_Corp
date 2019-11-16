@@ -13,4 +13,8 @@ class Product extends Model
         'name', 'sku', 'price', 'description'
     ];
 
+    public function bids(){
+
+        return $this->hasMany(Bid::class, 'product_id');
+    }
 }

@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.visitor')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card mt-4">
                 <div class="card-header bg-dark text-light">{{ __('Login') }}</div>
 
                 <div class="card-body">
@@ -60,6 +60,7 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
+                                <p>Don't have an account? register <a href="/register">here</a></p>
                             </div>
                         </div>
                     </form>

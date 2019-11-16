@@ -17,4 +17,9 @@ class Product extends Model
 
         return $this->hasMany(Bid::class, 'product_id');
     }
+
+    public function views(){
+
+        return $this->hasMany(ProductViews::class, 'product_id');
+    }
 }
